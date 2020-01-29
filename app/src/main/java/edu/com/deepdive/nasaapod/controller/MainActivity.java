@@ -1,4 +1,4 @@
-package edu.com.deepdive.nasaapod;
+package edu.com.deepdive.nasaapod.controller;
 
 import android.os.Bundle;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -7,6 +7,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import edu.com.deepdive.nasaapod.R;
 
 public class MainActivity extends AppCompatActivity {
 
