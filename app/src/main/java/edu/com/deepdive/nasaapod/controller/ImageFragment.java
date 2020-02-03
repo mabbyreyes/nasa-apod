@@ -22,7 +22,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import edu.cnm.deepdive.android.DateTimePickerFragment;
 import edu.cnm.deepdive.android.DateTimePickerFragment.Mode;
 import edu.com.deepdive.nasaapod.R;
-import edu.com.deepdive.nasaapod.model.Apod;
+import edu.com.deepdive.nasaapod.model.entity.Apod;
 import edu.com.deepdive.nasaapod.viewmodel.MainViewModel;
 import java.util.Calendar;
 
