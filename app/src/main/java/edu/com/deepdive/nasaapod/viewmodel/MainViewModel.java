@@ -10,7 +10,9 @@ import androidx.lifecycle.MutableLiveData;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import edu.com.deepdive.nasaapod.BuildConfig;
+import edu.com.deepdive.nasaapod.model.dao.AccessDao;
 import edu.com.deepdive.nasaapod.model.dao.ApodDao;
+import edu.com.deepdive.nasaapod.model.entity.Access;
 import edu.com.deepdive.nasaapod.model.entity.Apod;
 import edu.com.deepdive.nasaapod.service.ApodDatabase;
 import edu.com.deepdive.nasaapod.service.ApodService;
@@ -61,7 +63,10 @@ public class MainViewModel extends AndroidViewModel {
     dao.select(date)
         .subscribeOn(Schedulers.io())
         .subscribe(
-            (apod) -> this.apod.postValue(apod),
+            (apod) -> {
+              this.apod.postValue(apod);
+              insertAccess(apod);
+            },
             (throwable) -> this.throwable.postValue(throwable),
             () -> nasa.get(BuildConfig.API_KEY, ApodService.DATE_FORMATTER.format(date))
                 .subscribeOn(Schedulers.io())
@@ -72,6 +77,7 @@ public class MainViewModel extends AndroidViewModel {
                             (id) -> {
                               apod.setId(id);
                               this.apod.postValue(apod);
+                              insertAccess(apod);
                             },
                             (throwable) -> this.throwable.postValue(throwable)
                         ),
@@ -81,6 +87,14 @@ public class MainViewModel extends AndroidViewModel {
 
   }
 
+  private void insertAccess(Apod apod) {
+    AccessDao accessDao = database.getAccessDao();
+    Access access = new Access();
+    access.setApodId(apod.getId());
+    accessDao.insert(access)
+        .subscribeOn(Schedulers.io())
+        .subscribe(/* TODO Handle error result */);
+  }
 
 
 }
